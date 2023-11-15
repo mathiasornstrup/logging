@@ -15,11 +15,11 @@ namespace esp32m
     public:
         FSAppender(FS &fs, const char *name, uint8_t maxFiles = 1, uint32_t maxFileLen = 100000) : _fs(fs), _name(name), _maxFiles(maxFiles), _maxFileLen(maxFiles), _lock(xSemaphoreCreateRecursiveMutex()) {}
         FSAppender(const FSAppender &) = delete;
+        virtual void close() { return _file.close(); }
 
     protected:
         virtual bool append(const char *message);
         virtual bool shouldRotate(File &f) { return f.size() > _maxFileLen; }
-        void close() { return _file.close(); }
 
     private:
         FS &_fs;
