@@ -8,7 +8,9 @@ namespace esp32m
         bool result = false;
         xSemaphoreTakeRecursive(_lock, portMAX_DELAY);
         if (!_file)
-            _file = _fs.open(_name, "a");
+            _file = _fs.open(_name, "a+");
+        if (_file.size() + strlen(message) > _maxFileLen)
+            _file.seek(0);
         if (_file && _maxFiles > 1 && shouldRotate(_file))
         {
             auto rn = strlen(_name) + 1 + 3 + 1;
@@ -34,7 +36,7 @@ namespace esp32m
                     _fs.rename(a, b);
                 }
             }
-            _file = _fs.open(_name, "a");
+            _file = _fs.open(_name, "a+");
         }
         if (_file)
         {
