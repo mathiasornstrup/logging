@@ -13,7 +13,7 @@ namespace esp32m
     class FSAppender : public FormattingAppender
     {
     public:
-        FSAppender(FS &fs, const char *name, uint8_t maxFiles = 1, uint32_t maxFileLen = 100000) : _fs(fs), _name(name), _maxFiles(maxFiles), _maxFileLen(maxFiles), _lock(xSemaphoreCreateRecursiveMutex()) {}
+        FSAppender(FS &fs, const char *name, uint8_t maxFiles = 1, uint32_t maxFileLen = 100000) : _fs(fs), _name(name), _maxFiles(maxFiles), _maxFileLen(maxFileLen), _lock(xSemaphoreCreateRecursiveMutex()) {}
         FSAppender(const FSAppender &) = delete;
         virtual void close() { return _file.close(); }
 
