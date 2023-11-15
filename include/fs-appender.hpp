@@ -18,8 +18,8 @@ namespace esp32m
 
     protected:
         virtual bool append(const char *message);
-        virtual bool shouldRotate(File &f) { return f.size() > 8192; }
-        virtual void close() { return _file.close(); }
+        virtual bool shouldRotate(File &f) { return f.size() > _maxFileLen; }
+        void close() { return _file.close(); }
 
     private:
         FS &_fs;
